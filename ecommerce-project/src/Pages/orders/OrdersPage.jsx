@@ -2,10 +2,11 @@ import axios from "axios";
 import { useState, useEffect, Fragment } from "react";
 import dayjs from "dayjs";
 import "./OrdersPage.css";
-import { formatMoney } from "../utils/money";
-import { Header } from "../components/Header";
+import { formatMoney } from "../../utils/money";
+import { Header } from "../../components/Header";
 import { Link } from "react-router";
-import buyAgainIcon from "../../src/assets/images/icons/buy-again.png";
+import buyAgainIcon from "../../assets/images/icons/buy-again.png";
+import ordersFavicon from "../../assets/images/orders-favicon.png";
 
 export function OrdersPage({ cart }) {
   const [orders, setOrders] = useState([]);
@@ -21,7 +22,7 @@ export function OrdersPage({ cart }) {
       <title>orders</title>
 
       <head>
-        <link rel="icon" type="image/svg+xml" href="orders-favicon.png" />
+        <link rel="icon" type="image/png" href={ordersFavicon} />
       </head>
 
       <Header cart={cart} />
