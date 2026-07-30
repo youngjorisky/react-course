@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import "./HomePage.css";
+import homeFavicon from "../../assets/images/home-favicon.png";
 
 import { ProductGrid } from "./ProductGrid";
 
@@ -9,6 +10,11 @@ export function HomePage({ cart }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    document.title = "Home";
+
+    const favicon = document.querySelector("link[rel='icon']");
+    favicon.href = homeFavicon;
+
     const getHomeData = async () => {
       const response = await axios.get("/api/products");
 
