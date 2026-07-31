@@ -15,18 +15,26 @@ export function CheckoutPage({ cart, loadCart }) {
 
     const favicon = document.querySelector("link[rel='icon']");
     favicon.href = checkoutFavicon;
+  }, []);
 
-    const fetchCheckoutData = async () => {
-      let response = await axios.get(
+  useEffect(() => {
+    const fetchDeliveryOptions = async () => {
+      const response = await axios.get(
         "/api/delivery-options?expand=estimatedDeliveryTime",
       );
       setDeliveryOptions(response.data);
+    };
 
-      response = await axios.get("/api/payment-summary");
+    fetchDeliveryOptions();
+  }, []);
+
+  useEffect(() => {
+    const fetchPaymentSummary = async () => {
+      const response = await axios.get("/api/payment-summary");
       setPaymentSummary(response.data);
     };
 
-    fetchCheckoutData();
+    fetchPaymentSummary();
   }, [cart]);
 
   return (
