@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { formatMoney } from "../../utils/money";
 import { DeliveryOptions } from "./DeliveryOptions";
 
-export function CartItemDetails({ cartItem, deliveryOptions }) {
+export function CartItemDetails({ cartItem, deliveryOptions, loadCart }) {
   return (
     <Fragment>
       <img className="product-image" src={cartItem.product.image} />
@@ -22,7 +22,11 @@ export function CartItemDetails({ cartItem, deliveryOptions }) {
         </div>
       </div>
 
-      <DeliveryOptions cartItem={cartItem} deliveryOptions={deliveryOptions} />
+      <DeliveryOptions
+        cartItem={cartItem}
+        deliveryOptions={deliveryOptions}
+        loadCart={loadCart}
+      />
     </Fragment>
   );
 }
