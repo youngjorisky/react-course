@@ -34,6 +34,17 @@ export function CartItemDetails({ cartItem, deliveryOptions, loadCart }) {
     setQuantity(Number(event.target.value));
   };
 
+  const handleQuantityKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleUpdateClick();
+    }
+
+    if (event.key === "Escape") {
+      setQuantity(cartItem.quantity);
+      setIsUpdatingQuantity(false);
+    }
+  };
+
   return (
     <Fragment>
       <img className="product-image" src={cartItem.product.image} />
@@ -51,6 +62,7 @@ export function CartItemDetails({ cartItem, deliveryOptions, loadCart }) {
               type="text"
               value={quantity}
               onChange={handleQuantityChange}
+              onKeyDown={handleQuantityKeyDown}
               style={{ display: isUpdatingQuantity ? "inline-block" : "none" }}
             />
             <span
