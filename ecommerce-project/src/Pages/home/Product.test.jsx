@@ -1,5 +1,15 @@
 import { it, expect, describe, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
+vi.mock("axios", () => ({
+  default: {
+    post: vi.fn(),
+    get: vi.fn(),
+  },
+}));
+
+import axios from "axios";
 import { Product } from "./Product";
 
 describe("Product component", () => {
@@ -37,5 +47,40 @@ describe("Product component", () => {
     );
 
     expect(screen.getByText("87")).toBeInTheDocument();
+  });
+
+  it("adds a product to the cart", async () => {
+    const product = {
+      id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      image: "cimages/products/athletic-cotton-socks-6-pairs.jpg",
+      name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+      rating: {
+        stars: 4.5,
+        count: 87,
+      },
+      priceCents: 1090,
+      keywords: ["socks", "sports", "apparel"],
+    };
+
+    const loadCart = vi.fn();
+
+    render(<Product product={product} loadCart={loadCart} />);
+
+    const user = userEvent.setup();
+    const addToCartButton = screen.getByRole("button", {
+      name: /add to cart/i,
+    });
+
+    axios.post.mockResolvedValue({ data: {} });
+
+    await user.click(addToCartButton);
+
+    await waitFor(() => {
+      expect(axios.post).toHaveBeenCalledWith("/api/cart-items", {
+        productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+        quantity: 1,
+      });
+      expect(loadCart).toHaveBeenCalled();
+    });
   });
 });

@@ -80,7 +80,11 @@ export function Product({ product, loadCart }) {
 
       <div className="product-spacer"></div>
 
-      <div className="added-to-cart" style={{ opacity: showAdded ? 1 : 0 }}>
+      <div
+        className="added-to-cart"
+        style={{ opacity: showAdded ? 1 : 0 }}
+        data-testid="add-to-cart-button"
+      >
         <img src={checkmark} />
         Added
       </div>
