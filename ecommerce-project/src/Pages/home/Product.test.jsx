@@ -1,6 +1,8 @@
 import { it, expect, describe, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import axios from "axios";
+import { Product } from "./Product";
 
 vi.mock("axios", () => ({
   default: {
@@ -8,9 +10,6 @@ vi.mock("axios", () => ({
     get: vi.fn(),
   },
 }));
-
-import axios from "axios";
-import { Product } from "./Product";
 
 describe("Product component", () => {
   let product;
