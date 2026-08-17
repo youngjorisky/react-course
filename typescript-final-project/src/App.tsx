@@ -25,6 +25,33 @@ function App() {
     setCategory(event.target.value);
   }
 
+  function toggleProductStock(productId: string) {
+    setProducts((currentProducts) => {
+      return currentProducts.map((product) => {
+        if (product.id === productId) {
+          return {
+            ...product,
+            inStock: !product.inStock,
+          };
+        }
+
+        return product;
+      });
+    });
+  }
+
+  function deleteProduct(productId: string) {
+    setProducts((currentProducts) => {
+      return currentProducts.filter((product) => {
+        if (product.id === productId) {
+          return product.id !== productId;
+        }
+
+        return product;
+      });
+    });
+  }
+
   return (
     <div>
       <h1>Products</h1>
@@ -65,7 +92,10 @@ function App() {
           <h2>{product.name}</h2>
           <p>${product.price}</p>
           <p>{product.category}</p>
-          <p>{product.inStock ? "In Stock" : "Out of Stock"}</p>
+          <button onClick={() => toggleProductStock(product.id)}>
+            {product.inStock ? "In Stock" : "Out of Stock"}
+          </button>
+          <button onClick={() => deleteProduct(product.id)}>Delete</button>
         </div>
       ))}
     </div>
