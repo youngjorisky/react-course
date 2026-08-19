@@ -8,6 +8,7 @@ function App() {
   const [productName, setProductName] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
 
   function addProduct(product: Product) {
     setProducts([...products, product]);
@@ -42,14 +43,20 @@ function App() {
 
   function deleteProduct(productId: string) {
     setProducts((currentProducts) => {
-      return currentProducts.filter((product) => {
-        if (product.id === productId) {
-          return product.id !== productId;
-        }
-
-        return product;
-      });
+      return currentProducts.filter((product) => product.id !== productId);
     });
+  }
+
+  function editProduct(productId: string) {
+    setEditingProductId(productId);
+
+    const product = products.find((product) => product.id === productId);
+
+    if (product) {
+      setProductName(product.name);
+      setPrice(String(product.price));
+      setCategory(product.category);
+    }
   }
 
   return (
@@ -73,15 +80,33 @@ function App() {
       />
       <button
         onClick={() => {
-          const newProduct: Product = {
-            id: crypto.randomUUID(),
-            name: productName,
-            price: Number(price),
-            category: category,
-            inStock: true,
-          };
+          if (editingProductId) {
+            setProducts((currentProducts) => {
+              return currentProducts.map((product) => {
+                if (product.id === editingProductId) {
+                  return {
+                    ...product,
+                    name: productName,
+                    price: Number(price),
+                    category: category,
+                  };
+                }
+                return product;
+              });
+            });
 
-          addProduct(newProduct);
+            setEditingProductId(null);
+          } else {
+            const newProduct: Product = {
+              id: crypto.randomUUID(),
+              name: productName,
+              price: Number(price),
+              category: category,
+              inStock: true,
+            };
+
+            addProduct(newProduct);
+          }
         }}
       >
         Add Product
@@ -96,6 +121,7 @@ function App() {
             {product.inStock ? "In Stock" : "Out of Stock"}
           </button>
           <button onClick={() => deleteProduct(product.id)}>Delete</button>
+          <button onClick={() => editProduct(product.id)}>Edit</button>
         </div>
       ))}
     </div>
