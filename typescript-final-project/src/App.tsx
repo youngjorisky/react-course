@@ -2,6 +2,10 @@ import type { Product } from "./types";
 import { products as initialProductshow } from "./data/product";
 import "./App.css";
 import React, { useState } from "react";
+import ProductForm from "./components/ProductForm";
+import ProductFilters from "./components/ProductFilters";
+import ProductGrid from "./components/ProductGrid";
+import MaterialDetails from "./components/MaterialDetails";
 
 function App() {
   const [products, setProducts] = useState<Product[]>(initialProductshow);
@@ -13,6 +17,9 @@ function App() {
   const [stockFilter, setStockFilter] = useState<
     "all" | "inStock" | "outOfStock"
   >("all");
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
+    null,
+  );
 
   function addProduct(product: Product) {
     setProducts([...products, product]);
@@ -92,166 +99,97 @@ function App() {
     }
   });
 
+  const selectedProduct = products.find(
+    (product) => product.id === selectedProductId,
+  );
+
+  if (selectedProduct) {
+    return (
+      <div className="app">
+        <MaterialDetails
+          product={selectedProduct}
+          onBack={() => setSelectedProductId(null)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <h1>Product Manager</h1>
 
-      {/* Product Form */}
-      <div className="product-form">
-        <h2>{editingProductId ? "Edit Product" : "Add Product"}</h2>
+      <ProductForm
+        editingProductId={editingProductId}
+        productName={productName}
+        price={price}
+        category={category}
+        onNameChange={typingName}
+        onPriceChange={typingPrice}
+        onCategoryChange={typingCategory}
+        onSubmit={() => {
+          if (
+            productName.trim() === "" ||
+            price === "" ||
+            category.trim() === ""
+          )
+            return;
+          if (Number(price) <= 0) return;
 
-        <div className="form-inputs">
-          <input
-            value={productName}
-            onChange={typingName}
-            placeholder="Input product name"
-          />
-
-          <input
-            value={price}
-            onChange={typingPrice}
-            placeholder="Input product price"
-            type="number"
-          />
-
-          <input
-            value={category}
-            onChange={typingCategory}
-            placeholder="Input product category"
-          />
-
-          <button
-            onClick={() => {
-              if (
-                productName.trim() === "" ||
-                price === "" ||
-                category.trim() === ""
-              ) {
-                return;
-              }
-
-              if (Number(price) <= 0) {
-                return;
-              }
-
-              if (editingProductId) {
-                setProducts((currentProducts) => {
-                  return currentProducts.map((product) => {
-                    if (product.id === editingProductId) {
-                      return {
-                        ...product,
-                        name: productName.trim(),
-                        price: Number(price),
-                        category: category.trim(),
-                      };
+          if (editingProductId) {
+            setProducts((currentProducts) =>
+              currentProducts.map((product) =>
+                product.id === editingProductId
+                  ? {
+                      ...product,
+                      name: productName.trim(),
+                      price: Number(price),
+                      category: category.trim(),
                     }
+                  : product,
+              ),
+            );
+            setEditingProductId(null);
+            resetForm();
+            return;
+          }
 
-                    return product;
-                  });
-                });
+          if (
+            products.some(
+              (product) =>
+                product.name.trim().toLowerCase() ===
+                productName.trim().toLowerCase(),
+            )
+          )
+            return;
 
-                setEditingProductId(null);
-                resetForm();
-              } else {
-                if (
-                  products.some(
-                    (product) =>
-                      product.name.trim().toLowerCase() ===
-                      productName.trim().toLowerCase(),
-                  )
-                ) {
-                  return;
-                }
+          addProduct({
+            id: crypto.randomUUID(),
+            name: productName.trim(),
+            price: Number(price),
+            category: category.trim(),
+            inStock: true,
+          });
+          resetForm();
+        }}
+      />
 
-                const newProduct: Product = {
-                  id: crypto.randomUUID(),
-                  name: productName.trim(),
-                  price: Number(price),
-                  category: category.trim(),
-                  inStock: true,
-                };
+      <ProductFilters
+        searchTerm={searchTerm}
+        stockFilter={stockFilter}
+        onSearchChange={searchProduct}
+        onStockFilterChange={setStockFilter}
+        onClear={clearFilters}
+      />
 
-                addProduct(newProduct);
-                resetForm();
-              }
-            }}
-          >
-            {editingProductId ? "Save Changes" : "Add Product"}
-          </button>
-        </div>
-      </div>
-
-      {/* Search and Filters */}
-      <div className="controls">
-        <div className="search-box">
-          <input
-            value={searchTerm}
-            onChange={searchProduct}
-            placeholder="Search products..."
-          />
-        </div>
-
-        <div className="filter-buttons">
-          <button onClick={() => setStockFilter("all")}>All</button>
-
-          <button onClick={() => setStockFilter("inStock")}>In Stock</button>
-
-          <button onClick={() => setStockFilter("outOfStock")}>
-            Out of Stock
-          </button>
-
-          <button className="clear-button" onClick={clearFilters}>
-            Clear Filters
-          </button>
-        </div>
-      </div>
-
-      {/* Product Count */}
       <p className="product-count">Total Products: {filteredProducts.length}</p>
 
-      {/* Product Grid */}
-      <div className="product-grid">
-        {filteredProducts.map((product) => (
-          <div className="product-card" key={product.id}>
-            <h2>{product.name}</h2>
-
-            <p className="product-price">${product.price}</p>
-
-            <p className="product-category">{product.category}</p>
-
-            <span
-              className={`stock-status ${
-                product.inStock ? "stock-in" : "stock-out"
-              }`}
-            >
-              {product.inStock ? "In Stock" : "Out of Stock"}
-            </span>
-
-            <div className="product-actions">
-              <button
-                className="delete-button"
-                onClick={() => deleteProduct(product.id)}
-              >
-                Delete
-              </button>
-
-              <button
-                className="edit-button"
-                onClick={() => editProduct(product.id)}
-              >
-                Edit
-              </button>
-
-              <button
-                className="stock-button"
-                onClick={() => toggleProductStock(product.id)}
-              >
-                Toggle Stock
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ProductGrid
+        products={filteredProducts}
+        onDelete={deleteProduct}
+        onEdit={editProduct}
+        onToggleStock={toggleProductStock}
+        onOpen={setSelectedProductId}
+      />
     </div>
   );
 }
