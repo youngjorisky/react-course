@@ -168,6 +168,7 @@ function App() {
             price: Number(price),
             category: category.trim(),
             inStock: true,
+            image: "/images/materials/calcined-clay.jpg",
           });
           resetForm();
         }}

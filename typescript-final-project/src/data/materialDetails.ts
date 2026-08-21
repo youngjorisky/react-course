@@ -1,8 +1,5 @@
 import type { MaterialDetails } from "../types";
 
-const image = (query: string) =>
-  `https://images.unsplash.com/${query}?auto=format&fit=crop&w=1200&q=85`;
-
 export const materialDetails: Record<string, MaterialDetails> = {
   clinker: {
     summary:
@@ -12,7 +9,6 @@ export const materialDetails: Record<string, MaterialDetails> = {
       "High-strength concrete",
       "Road and bridge construction",
     ],
-    image: image("photo-1503387762-592deb58ef4e"),
     imageAlt: "Industrial cement production machinery",
     regionalCosts: [
       {
@@ -43,7 +39,6 @@ export const materialDetails: Record<string, MaterialDetails> = {
       "Concrete aggregate",
       "Soil conditioning",
     ],
-    image: image("photo-1518005020951-eccb494ad742"),
     imageAlt: "Light stone construction material",
     regionalCosts: [
       {
@@ -74,7 +69,6 @@ export const materialDetails: Record<string, MaterialDetails> = {
       "Drywall and plasterboard",
       "Decorative plaster",
     ],
-    image: image("photo-1518709268805-4e9042af9f23"),
     imageAlt: "White mineral rock texture",
     regionalCosts: [
       {
@@ -107,7 +101,6 @@ const genericDetails: MaterialDetails = {
     "Concrete and infrastructure",
     "Blended construction materials",
   ],
-  image: image("photo-1504307651254-35680f356dfd"),
   imageAlt: "Construction site and building materials",
   regionalCosts: [
     {

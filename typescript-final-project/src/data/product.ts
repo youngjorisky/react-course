@@ -7,6 +7,7 @@ export const products: Product[] = [
     price: 1,
     category: "raw material1",
     inStock: true,
+    image: "/images/materials/clinker.jpg",
   },
   {
     id: "limestone",
@@ -14,6 +15,7 @@ export const products: Product[] = [
     price: 2,
     category: "raw material2",
     inStock: true,
+    image: "/images/materials/limestone.webp",
   },
   {
     id: "gypsum",
@@ -21,6 +23,7 @@ export const products: Product[] = [
     price: 3,
     category: "raw material3",
     inStock: false,
+    image: "/images/materials/gypsum.jpg",
   },
   {
     id: "calcined clay",
@@ -28,6 +31,7 @@ export const products: Product[] = [
     price: 4,
     category: "raw material4",
     inStock: true,
+    image: "/images/materials/calcined-clay.jpg",
   },
   {
     id: "silica-sand",
@@ -35,6 +39,7 @@ export const products: Product[] = [
     price: 5,
     category: "raw material",
     inStock: true,
+    image: "/images/materials/silica-sand.jpg",
   },
   {
     id: "iron-ore",
@@ -42,6 +47,7 @@ export const products: Product[] = [
     price: 6,
     category: "raw material",
     inStock: false,
+    image: "/images/materials/iron-ore.jpg",
   },
   {
     id: "fly-ash",
@@ -49,6 +55,7 @@ export const products: Product[] = [
     price: 7,
     category: "supplementary cementitious material",
     inStock: true,
+    image: "/images/materials/fly-ash.jpg",
   },
   {
     id: "slag",
@@ -56,6 +63,7 @@ export const products: Product[] = [
     price: 8,
     category: "supplementary cementitious material",
     inStock: true,
+    image: "/images/materials/slag.jpg",
   },
   {
     id: "pozzolan",
@@ -63,6 +71,7 @@ export const products: Product[] = [
     price: 9,
     category: "supplementary cementitious material",
     inStock: false,
+    image: "/images/materials/pozzolan.jpg",
   },
   {
     id: "gypsum-powder",
@@ -70,5 +79,6 @@ export const products: Product[] = [
     price: 10,
     category: "additive",
     inStock: true,
+    image: "/images/materials/gypsum-powder.jpg",
   },
 ];

@@ -18,6 +18,7 @@ function ProductCard({
 }: ProductCardProps) {
   return (
     <article className="product-card" onClick={() => onOpen(product.id)}>
+      <img className="product-card-image" src={product.image} alt="" />
       <button
         className="product-info-button"
         onClick={() => onOpen(product.id)}

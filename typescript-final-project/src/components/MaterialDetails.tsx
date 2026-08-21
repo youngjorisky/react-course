@@ -27,11 +27,7 @@ function MaterialDetails({ product, onBack }: MaterialDetailsProps) {
           </span>
         </div>
         <div className="material-visual">
-          <img src={details.image} alt={details.imageAlt} />
-          <span className="visual-ring visual-ring-one" />
-          <span className="visual-ring visual-ring-two" />
-          <span className="visual-orbit orbit-one" />
-          <span className="visual-orbit orbit-two" />
+          <img src={product.image} alt={details.imageAlt} />
         </div>
       </section>
 

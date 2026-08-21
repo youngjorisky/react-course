@@ -4,6 +4,7 @@ export type Product = {
   price: number;
   category: string;
   inStock: boolean;
+  image: string;
 };
 
 export type RegionalCost = {
@@ -16,7 +17,6 @@ export type RegionalCost = {
 export type MaterialDetails = {
   summary: string;
   uses: string[];
-  image: string;
   imageAlt: string;
   regionalCosts: RegionalCost[];
 };

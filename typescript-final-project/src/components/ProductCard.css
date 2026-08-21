@@ -9,6 +9,13 @@
   animation: cardEnter 0.5s ease both;
   cursor: pointer;
 }
+.product-card-image {
+  display: block;
+  width: calc(100% + 46px);
+  height: 150px;
+  margin: -23px -23px 20px;
+  object-fit: cover;
+}
 @keyframes cardEnter {
   from {
     opacity: 0;
