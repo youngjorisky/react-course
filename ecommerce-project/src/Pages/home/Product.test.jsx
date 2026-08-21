@@ -48,7 +48,7 @@ describe("Product component", () => {
 
     expect(screen.getByTestId("product-rating-stars-image")).toHaveAttribute(
       "src",
-      "cimages/ratings/rating-45.png",
+      "/images/ratings/rating-45.png",
     );
 
     expect(screen.getByText("87")).toBeInTheDocument();
